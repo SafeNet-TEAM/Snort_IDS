@@ -1,0 +1,56 @@
+
+##################################################################
+## Ping of Death 
+alert icmp any any -> 192.168.64.15 any (msg:"Ping of Death"; content:"| 585858585858|"; threshold: type both, track by_src, count 3, seconds 5; sid:2000001; rev:1;)
+## ICMP Flooding Attack 
+alert icmp any any -> 192.168.64.15 any (msg:"TEST: ICMP Flooding Attack"; threshold: type both, track by_src, count 1000, seconds 5; sid:2000002; rev:1;)
+## TCP SYN Flooding Attack
+alert tcp any any -> 192.168.64.15 any (msg:"TCP SYN Flooding Attack"; flags:S; threshold: type both, track by_src, count 100, seconds 5; sid:2000003; rev:1;)
+## TCP ACK Flooding Attack 
+alert tcp any any -> 192.168.64.15 any (msg:"TCP ACK Attack"; flags:A; threshold: type both, track by_src, count 10000, seconds 5; sid:2000004; rev:1;)
+## TCP NULL Flooding Attack 
+alert tcp any any -> 192.168.64.15 any (msg:"NULL Attack"; flags:0; threshold: type both, track by_src, count 10, seconds 5; sid:2000005; rev:1;)
+## UDP Flooding Attack 
+alert udp any any -> 192.168.64.15 any (msg:"UDP Floofing Attack"; threshold:type threshold, track by_src, count 3, seconds 5; sid:2000006; rev:1;)
+## HTTP GET Flooding Attack 
+alert tcp any any -> 192.168.64.15 80 (msg:"HTTP GET Flooding Attack"; content :"GET / HTTP/1."; depth:13; nocase; threshold:type threshold, track by_src, count 100, seconds 5; sid:2000007; rev:1;)
+##################################################################
+## SSH brute force attack 
+alert tcp any any -> 192.168.64.15 22 (msg:"Brute Force SSH"; threshold: type both, track by_src, count 3, seconds 5; content:"SSH-2.0"; sid:2000008; rev:1;) 
+## FTP brute force attack 
+alert tcp any any -> any any (msg:"FTP Brute Force"; content:"Login incorrect"; nocase; threshold:type threshold, track by_dst, count 5, seconds 30; sid:2000009; rev:1;)
+## Telnet brute force attack 
+alert tcp any 23 -> any any (msg: "Telnet Brute Force"; content: "Login incorrect"; nocase; threshold: type threshold, track by_dst, count 2, seconds 10; sid:2000010; rev:1;)
+## Telnet
+alert tcp any 23 -> any any (msg:"INFO TELNET Bad Login"; flow:from_server,established; content:"Login incorrect"; nocase; classtype:bad-unknown; sid:2000011; rev:1;)
+## Telnet
+alert tcp any 23 -> any any (msg:"Success Telnet login"; content:"login"; pcre:"/root@.*#/"; nocase; sid:2000012;)
+## SSH 
+alert tcp any any -> 192.168.64.15 22 (msg:"SSH Connection"; content:"SSH-2.0"; nocase; sid: 2000013; rev:1;)
+######################################################################
+## XMAS scan 
+alert tcp any any -> 192.168.64.15 any (msg:"nmap XMAS SCAN"; flags: FPU,CE;sid:2000014; rev:1;)
+## TCP Open Scan
+alert tcp any any -> 192.168.64.15 any ( msg:"TCP_OpenScan!!!"; flags:S; threshold:type both,track by_src, count 3, seconds 5; sid:2000015; rev:1;)
+## NULL Scan 
+alert tcp any any -> 192.168.64.15 any ( msg:"NULL_SCAN!!!"; flags:0; sid:2000016; rev:1;)
+##3#############################################################
+## Land Attack 
+alert ip any any -> 192.168.64.15 any (msg:"Land Attack"; sameip; sid:2000017; rev:1;)
+## SYN+FIN 
+alert tcp any any -> 192.168.64.15 any (msg:"SYN+FIN Packet"; flags:SF; sid:2000018; rev:1;)
+## FIN 
+alert tcp any any -> 192.168.64.15 any (msg:"Only FIN Packet"; flags:F; sid:2000019; rev:1;)
+##
+alert tcp any any -> 192.168.64.15 any (msg:"no settings flag packet"; flags:!UAPRSF; sid:2000020; rev:1;)
+
+
+
+
+
+
+
+
+
+
+
