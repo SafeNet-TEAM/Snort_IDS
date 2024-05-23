@@ -63,7 +63,6 @@ https://github.com/firnsy/barnyard2
 |탐지 가능 공격|Snort Rule|
 |------|---|
 |SSH brute force 탐지|alert tcp any any -> 192.168.64.15 22 (msg:"Brute Force SSH"; threshold: type both, track by_src, count 10, seconds 20; content:"SSH-2.0"; sid:2000008;)|
-
 |FTP brute force 탐지|alert tcp any any -> 192.168.64.15 21 (msg:"Brute Force FTP"; threshold: type both, track by_src, count 10, seconds 20; content:"Login incorrect"; sid:2000009;)|
 |Telent brute force 탐지|alert tcp any 23 -> any any (msg: "Telnet Brute Force"; content: "Login incorrect"; nocase; threshold: type threshold, track by_dst, count 2, seconds 10; sid:2000010;)|
 
